@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Betting Arbitrage Scanner</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Arbitrage Scanner</h1>
+            <p class="subtitle">Find guaranteed profit opportunities across sportsbooks</p>
+        </header>
+
+        <div class="controls">
+            <div class="control-group">
+                <label for="sport-select">Sport</label>
+                <select id="sport-select">
+                    <option value="">Loading sports...</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="min-profit">Min Profit %</label>
+                <input type="number" id="min-profit" value="0.1" min="0" max="100" step="0.1">
+            </div>
+
+            <div class="control-group">
+                <label for="total-stake">Stake Amount ($)</label>
+                <input type="number" id="total-stake" value="1000" min="1" step="100">
+            </div>
+
+            <button id="scan-btn" class="btn-primary">
+                <span class="btn-text">Scan for Opportunities</span>
+                <span class="btn-loading" style="display: none;">Scanning...</span>
+            </button>
+        </div>
+
+        <div class="api-usage">
+            <span id="api-remaining">API Requests: --</span>
+            <span class="separator">|</span>
+            <span id="api-used-month">Used this month: --</span>
+        </div>
+
+        <div id="scan-info" class="scan-info" style="display: none;">
+            <span id="events-scanned">0 events scanned</span>
+            <span class="separator">|</span>
+            <span id="opportunities-found">0 opportunities found</span>
+            <span class="separator">|</span>
+            <span id="scan-time"></span>
+        </div>
+
+        <div id="no-opportunities" class="no-results" style="display: none;">
+            <p>No arbitrage opportunities found.</p>
+            <p class="hint">Try a different sport or lower the minimum profit threshold.</p>
+        </div>
+
+        <div id="results" class="results">
+            <table id="opportunities-table" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Event</th>
+                        <th>Sport</th>
+                        <th>Profit %</th>
+                        <th>Bookmakers</th>
+                        <th>Start Time</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="opportunities-body">
+                </tbody>
+            </table>
+        </div>
+
+        <div id="stake-calculator" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Stake Calculator</h2>
+                    <button class="close-btn" onclick="closeModal()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div id="event-details"></div>
+                    <div class="stake-input">
+                        <label for="modal-stake">Total Stake ($)</label>
+                        <input type="number" id="modal-stake" value="1000" min="1">
+                        <button onclick="recalculateStakes()" class="btn-secondary">Recalculate</button>
+                    </div>
+                    <div id="stake-results"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="error-message" class="error" style="display: none;"></div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
